@@ -1,11 +1,9 @@
-"use client"
-
-import { motion } from "motion/react"
 import { services } from "@/data/services"
 import { getIcon } from "@/lib/icons"
 import { Check } from "lucide-react"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { AnimateIn } from "@/components/shared/animate-in"
 
 function ServiceIcon({ iconName, className }: { iconName: string; className?: string }) {
   const Icon = getIcon(iconName)
@@ -17,12 +15,9 @@ export function FeatureCards() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {services.map((service, index) => (
-        <motion.div
+        <AnimateIn
           key={service.title}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: index * 0.1 }}
+          delay={index * 0.1}
         >
           <Card
             className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
@@ -55,7 +50,7 @@ export function FeatureCards() {
               </ul>
             </CardContent>
           </Card>
-        </motion.div>
+        </AnimateIn>
       ))}
     </div>
   )

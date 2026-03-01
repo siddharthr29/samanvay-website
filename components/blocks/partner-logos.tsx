@@ -1,8 +1,6 @@
-"use client"
-
-import { motion } from "motion/react"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import { AnimateIn } from "@/components/shared/animate-in"
 
 const partners = [
   { name: "UNICEF", sector: "Global Health" },
@@ -26,17 +24,15 @@ export function PartnerLogos() {
       <Separator className="max-w-xs mx-auto mb-6" />
       <div className="flex flex-wrap items-center justify-center gap-2">
         {partners.map((partner, index) => (
-          <motion.div
+          <AnimateIn
             key={partner.name}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: index * 0.05 }}
+            variant="fade-scale"
+            delay={index * 0.05}
           >
             <Badge variant="outline" className="px-3 py-1.5 text-sm font-medium hover:bg-primary/5 hover:border-primary/20 transition-all cursor-default">
               {partner.name}
             </Badge>
-          </motion.div>
+          </AnimateIn>
         ))}
       </div>
     </div>

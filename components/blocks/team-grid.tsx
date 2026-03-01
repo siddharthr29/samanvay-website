@@ -1,11 +1,9 @@
-"use client"
-
-import { motion } from "motion/react"
 import { Linkedin, Github } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { AnimateIn } from "@/components/shared/animate-in"
 
 export interface TeamMember {
   name: string
@@ -56,13 +54,7 @@ export function TeamGrid({ members }: { members: TeamMember[] }) {
       {members.map((member, index) => {
         const badgeVariant = getRoleBadge(member.role)
         return (
-          <motion.div
-            key={member.name}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: index * 0.05 }}
-          >
+          <AnimateIn key={member.name} delay={index * 0.05}>
             <Card className="h-full text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
               <CardContent className="pt-6">
                 <Avatar className="w-20 h-20 mx-auto mb-4 group-hover:scale-105 transition-transform duration-300">
@@ -108,7 +100,7 @@ export function TeamGrid({ members }: { members: TeamMember[] }) {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </AnimateIn>
         )
       })}
     </div>

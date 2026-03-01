@@ -1,8 +1,6 @@
-"use client"
-
-import { motion } from "motion/react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { AnimateIn } from "@/components/shared/animate-in"
 
 const steps = [
   {
@@ -39,13 +37,9 @@ export function ProcessSteps() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {steps.map((step, index) => (
-          <motion.div
+          <AnimateIn
             key={step.title}
-            className="relative"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: index * 0.15 }}
+            delay={index * 0.15}
           >
             <Card
               className="h-full hover:shadow-md transition-all duration-300"
@@ -65,7 +59,7 @@ export function ProcessSteps() {
                 <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
               </CardContent>
             </Card>
-          </motion.div>
+          </AnimateIn>
         ))}
       </div>
     </div>

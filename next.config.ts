@@ -13,6 +13,17 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: [
+      "lucide-react",
+      "radix-ui",
+      "@notionhq/client",
+    ],
+  },
+  compress: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
 }
 
 export default nextConfig

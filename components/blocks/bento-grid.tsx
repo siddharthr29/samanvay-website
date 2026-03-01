@@ -1,14 +1,12 @@
-"use client"
-
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "motion/react"
 import { ArrowUpRight } from "lucide-react"
 import { products, type Product } from "@/data/products"
 import { cn } from "@/lib/utils"
 import { getIcon } from "@/lib/icons"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { AnimateIn } from "@/components/shared/animate-in"
 
 function ProductIcon({ iconName, className }: { iconName: string; className?: string }) {
   const Icon = getIcon(iconName)
@@ -18,12 +16,7 @@ function ProductIcon({ iconName, className }: { iconName: string; className?: st
 
 function BentoCard({ product, index, large }: { product: Product; index: number; large?: boolean }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
-    >
+    <AnimateIn delay={index * 0.1}>
       <Link href={`/products/${product.slug}`} className="group block h-full">
         <Card className={cn(
           "h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative overflow-hidden",
@@ -81,7 +74,7 @@ function BentoCard({ product, index, large }: { product: Product; index: number;
           </CardContent>
         </Card>
       </Link>
-    </motion.div>
+    </AnimateIn>
   )
 }
 

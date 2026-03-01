@@ -1,19 +1,22 @@
 import { Metadata } from "next"
+import dynamic from "next/dynamic"
 import { Hero } from "@/components/blocks/hero"
-import { PartnerLogos } from "@/components/blocks/partner-logos"
-import { BentoGrid } from "@/components/blocks/bento-grid"
-import { ProcessSteps } from "@/components/blocks/process-steps"
-import { StatsCounter } from "@/components/blocks/stats-counter"
-import { FeatureCards } from "@/components/blocks/feature-cards"
-import { AskAISection } from "@/components/blocks/ask-ai-section"
-import { CTASection } from "@/components/blocks/cta-section"
-import { FAQAccordion } from "@/components/blocks/faq-accordion"
 import { Section } from "@/components/shared/section"
 import { SectionHeading } from "@/components/shared/section-heading"
 import { WaveDivider } from "@/components/shared/wave-divider"
 import { siteConfig } from "@/data/site-config"
 import { homepageFaqs } from "@/data/homepage-faqs"
 import { organizationJsonLd, faqJsonLd } from "@/lib/seo"
+
+// Dynamic imports for below-fold components — reduces initial JS bundle
+const PartnerLogos = dynamic(() => import("@/components/blocks/partner-logos").then(m => ({ default: m.PartnerLogos })))
+const BentoGrid = dynamic(() => import("@/components/blocks/bento-grid").then(m => ({ default: m.BentoGrid })))
+const StatsCounter = dynamic(() => import("@/components/blocks/stats-counter").then(m => ({ default: m.StatsCounter })))
+const ProcessSteps = dynamic(() => import("@/components/blocks/process-steps").then(m => ({ default: m.ProcessSteps })))
+const FeatureCards = dynamic(() => import("@/components/blocks/feature-cards").then(m => ({ default: m.FeatureCards })))
+const AskAISection = dynamic(() => import("@/components/blocks/ask-ai-section").then(m => ({ default: m.AskAISection })))
+const FAQAccordion = dynamic(() => import("@/components/blocks/faq-accordion").then(m => ({ default: m.FAQAccordion })))
+const CTASection = dynamic(() => import("@/components/blocks/cta-section").then(m => ({ default: m.CTASection })))
 
 export const metadata: Metadata = {
   title: siteConfig.name,

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 
-const DISCORD_WEBHOOK_URL =
-  "https://discord.com/api/webhooks/1477679507161878791/8xs1f0eHChNQZexdTH5hHHlmiW4iFSyXX_wjed0tTbKrX6MqU6mVRILJOTykIgm8aMNO"
+const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL
 
 function validateEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -43,6 +42,14 @@ export async function POST(request: NextRequest) {
 
     if (errors.length > 0) {
       return NextResponse.json({ error: errors.join(". ") }, { status: 400 })
+    }
+
+    if (!DISCORD_WEBHOOK_URL) {
+      console.error("DISCORD_WEBHOOK_URL environment variable is not set")
+      return NextResponse.json(
+        { error: "Server configuration error. Please try again later." },
+        { status: 500 }
+      )
     }
 
     // Send to Discord webhook

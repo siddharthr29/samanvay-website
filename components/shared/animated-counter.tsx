@@ -1,7 +1,6 @@
 "use client"
 
 import { useRef, useEffect, useState } from "react"
-import { useInView } from "motion/react"
 
 interface AnimatedCounterProps {
   target: number
@@ -17,29 +16,42 @@ export function AnimatedCounter({
   duration = 2000,
 }: AnimatedCounterProps) {
   const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true })
   const [count, setCount] = useState(0)
+  const hasAnimated = useRef(false)
 
   useEffect(() => {
-    if (!isInView) return
+    const el = ref.current
+    if (!el) return
 
-    let startTime: number
-    let animationFrame: number
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true
+          observer.unobserve(el)
 
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp
-      const progress = Math.min((timestamp - startTime) / duration, 1)
-      const eased = 1 - Math.pow(1 - progress, 3)
-      setCount(Math.floor(eased * target))
+          let startTime: number
+          let animationFrame: number
 
-      if (progress < 1) {
-        animationFrame = requestAnimationFrame(animate)
-      }
-    }
+          const animate = (timestamp: number) => {
+            if (!startTime) startTime = timestamp
+            const progress = Math.min((timestamp - startTime) / duration, 1)
+            const eased = 1 - Math.pow(1 - progress, 3)
+            setCount(Math.floor(eased * target))
 
-    animationFrame = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(animationFrame)
-  }, [isInView, target, duration])
+            if (progress < 1) {
+              animationFrame = requestAnimationFrame(animate)
+            }
+          }
+
+          animationFrame = requestAnimationFrame(animate)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [target, duration])
 
   return (
     <span ref={ref}>

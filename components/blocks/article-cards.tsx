@@ -1,9 +1,7 @@
-"use client"
-
 import Link from "next/link"
-import { motion } from "motion/react"
 import { Calendar, ArrowRight } from "lucide-react"
 import { formatDate } from "@/lib/utils"
+import { AnimateIn } from "@/components/shared/animate-in"
 
 export interface ArticleCardData {
   title: string
@@ -19,13 +17,7 @@ export function ArticleCards({ articles }: { articles: ArticleCardData[] }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {articles.map((article, index) => (
-        <motion.div
-          key={article.slug}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: index * 0.1 }}
-        >
+        <AnimateIn key={article.slug} delay={index * 0.1}>
           <Link
             href={`/articles/${article.slug}`}
             className="group block rounded-2xl border bg-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full overflow-hidden"
@@ -59,7 +51,7 @@ export function ArticleCards({ articles }: { articles: ArticleCardData[] }) {
               </div>
             </div>
           </Link>
-        </motion.div>
+        </AnimateIn>
       ))}
     </div>
   )
