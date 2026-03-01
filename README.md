@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Samanvay Foundation Website
+
+Official website for [Samanvay Research and Development Foundation](https://samanvayfoundation.org) — a Section-8 non-profit in Bangalore building open-source technology for India's social sector.
+
+## Tech Stack
+
+- **Framework:** [Next.js 16](https://nextjs.org) (App Router, Turbopack)
+- **UI:** [shadcn/ui](https://ui.shadcn.com), [Tailwind CSS 4](https://tailwindcss.com), [Radix UI](https://www.radix-ui.com)
+- **Animations:** [Motion](https://motion.dev) (Framer Motion)
+- **Icons:** [Lucide React](https://lucide.dev)
+- **CMS:** [Notion API](https://developers.notion.com) (with local data fallback)
+- **Deployment:** [Vercel](https://vercel.com)
+
+## Features
+
+- Product pages for Avni, Bahmni, Gunak, TeleSathi, Shwaas, and Mentor To Go
+- Article system with reading progress, estimated read time, and share buttons
+- Contact form with validation and Discord webhook integration
+- Ask AI section — verify our impact via ChatGPT, Perplexity, Claude, Gemini, Grok
+- SEO optimized — JSON-LD structured data, sitemap, robots.txt, OpenGraph images
+- Glossary, use cases, comparisons, books, and team pages
+- Light/dark theme toggle
+- WCAG AA accessible
+- Fully responsive
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Install dependencies
+pnpm install
+
+# Run development server
 pnpm dev
-# or
-bun dev
+
+# Build for production
+pnpm build
+
+# Start production server
+pnpm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables (Optional)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+For Notion CMS integration, add to `.env.local`:
 
-## Learn More
+```env
+NOTION_API_KEY=your_notion_api_key
+NOTION_DB=your_notion_database_id
+NOTION_CRM_DB=your_notion_crm_database_id
+```
 
-To learn more about Next.js, take a look at the following resources:
+Without these, the site uses local article data from `data/articles.ts`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/                  # Next.js App Router pages
+  api/contact/        # Contact form API (Discord webhook)
+  articles/           # Article pages (Notion or local)
+  products/           # Product pages
+  glossary/           # Health-tech glossary
+  use-cases/          # Use case pages
+  compare/            # Product comparison pages
+components/
+  blocks/             # Page-level components (hero, CTA, etc.)
+  layout/             # Navbar, footer, breadcrumbs
+  article/            # Article renderer, TOC, share buttons
+  shared/             # Reusable components
+  ui/                 # shadcn/ui primitives
+data/                 # Static data (products, articles, site config)
+lib/                  # Utilities (Notion client, SEO helpers, icons)
+public/               # Static assets (logos, fonts, icons)
+```
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+All rights reserved. Copyright Samanvay Research and Development Foundation.
