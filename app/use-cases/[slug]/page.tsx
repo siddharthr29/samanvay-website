@@ -4,7 +4,6 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, Check } from "lucide-react"
 import { Section } from "@/components/shared/section"
 import { CTASection } from "@/components/blocks/cta-section"
-import { Breadcrumbs } from "@/components/layout/breadcrumbs"
 import { useCases } from "@/data/use-cases"
 import { products } from "@/data/products"
 import { breadcrumbJsonLd } from "@/lib/seo"
@@ -49,11 +48,10 @@ export default async function UseCasePage({ params }: { params: Promise<{ slug: 
         }}
       />
 
-      <section className="relative overflow-hidden">
+      <section className="relative">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0f172a] via-[#1e3a5f] to-[#0f2847]" />
         <div className="absolute inset-0 dot-pattern opacity-20" />
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-          <Breadcrumbs items={[{ label: "Use Cases", href: "/use-cases" }, { label: uc.sector }]} variant="light" />
           <div className="max-w-3xl mt-4">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-3xl">{uc.sectorEmoji}</span>

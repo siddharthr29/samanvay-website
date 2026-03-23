@@ -1,29 +1,20 @@
 import { Metadata } from "next"
-import dynamic from "next/dynamic"
-import { Hero } from "@/components/blocks/hero"
-import { Section } from "@/components/shared/section"
-import { SectionHeading } from "@/components/shared/section-heading"
-import { WaveDivider } from "@/components/shared/wave-divider"
-import { siteConfig } from "@/data/site-config"
 import { homepageFaqs } from "@/data/homepage-faqs"
 import { organizationJsonLd, faqJsonLd } from "@/lib/seo"
-
-// Dynamic imports for below-fold components — reduces initial JS bundle
-const PartnerLogos = dynamic(() => import("@/components/blocks/partner-logos").then(m => ({ default: m.PartnerLogos })))
-const BentoGrid = dynamic(() => import("@/components/blocks/bento-grid").then(m => ({ default: m.BentoGrid })))
-const StatsCounter = dynamic(() => import("@/components/blocks/stats-counter").then(m => ({ default: m.StatsCounter })))
-const ProcessSteps = dynamic(() => import("@/components/blocks/process-steps").then(m => ({ default: m.ProcessSteps })))
-const FeatureCards = dynamic(() => import("@/components/blocks/feature-cards").then(m => ({ default: m.FeatureCards })))
-const AskAISection = dynamic(() => import("@/components/blocks/ask-ai-section").then(m => ({ default: m.AskAISection })))
-const FAQAccordion = dynamic(() => import("@/components/blocks/faq-accordion").then(m => ({ default: m.FAQAccordion })))
-const CTASection = dynamic(() => import("@/components/blocks/cta-section").then(m => ({ default: m.CTASection })))
+import { Homepage } from "./homepage"
 
 export const metadata: Metadata = {
-  title: siteConfig.name,
-  description: siteConfig.description,
+  title: "Samanvay Foundation — Open Source Technology for Social Good",
+  description:
+    "Building open-source digital infrastructure for India's social sector. 60+ nonprofits. 500,000+ lives. 6 products.",
+  openGraph: {
+    title: "Samanvay Foundation",
+    description: "Open-source digital infrastructure for India's social sector.",
+    type: "website",
+  },
 }
 
-export default function HomePage() {
+export default function Page() {
   return (
     <>
       <script
@@ -34,73 +25,7 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(homepageFaqs)) }}
       />
-
-      <Hero />
-
-      <Section compact>
-        <PartnerLogos />
-      </Section>
-
-      <WaveDivider variant="wave" />
-
-      <Section className="bg-muted/30">
-        <SectionHeading
-          badge="Open Source"
-          emoji="🛠️"
-          title="Our Products"
-          subtitle="Technology products and product-services for the social sector"
-          gradient="cool"
-        />
-        <BentoGrid />
-      </Section>
-
-      <WaveDivider variant="wave" flip />
-
-      <Section compact>
-        <StatsCounter />
-      </Section>
-
-      <WaveDivider variant="curve" />
-
-      <Section className="bg-muted/30">
-        <SectionHeading
-          emoji="⚡"
-          title="How We Work"
-          subtitle="A simple, proven process to bring technology to your organization"
-        />
-        <ProcessSteps />
-      </Section>
-
-      <WaveDivider variant="curve" flip />
-
-      <Section>
-        <SectionHeading
-          badge="Services"
-          emoji="🎯"
-          title="Our Services"
-          subtitle="End-to-end technology services for grassroots organizations"
-          gradient="warm"
-        />
-        <FeatureCards />
-      </Section>
-
-      <Section className="bg-muted/30">
-        <AskAISection />
-      </Section>
-
-      <Section>
-        <SectionHeading
-          title="Frequently Asked Questions"
-          subtitle="Common questions about Samanvay Foundation and our work"
-        />
-        <div className="max-w-3xl mx-auto">
-          <FAQAccordion items={homepageFaqs} />
-        </div>
-      </Section>
-
-      <Section compact>
-        <CTASection />
-      </Section>
+      <Homepage />
     </>
   )
 }

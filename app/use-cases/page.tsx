@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { Section } from "@/components/shared/section"
-import { Breadcrumbs } from "@/components/layout/breadcrumbs"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useCases } from "@/data/use-cases"
@@ -28,11 +27,10 @@ export default function UseCasesPage() {
         }}
       />
 
-      <section className="relative overflow-hidden">
+      <section className="relative">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0f172a] via-[#1e3a5f] to-[#0f2847]" />
         <div className="absolute inset-0 dot-pattern opacity-20" />
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-          <Breadcrumbs items={[{ label: "Use Cases" }]} variant="light" />
           <div className="max-w-3xl mt-4">
             <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4 text-white">
               Real-World{" "}

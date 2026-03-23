@@ -2,9 +2,11 @@ export const siteConfig = {
   name: "Samanvay Foundation",
   fullName: "Samanvay Research and Development Foundation",
   description: "Transform your social programs using best-in-class software products. Get technology consulting, software development, managed service, and application integration services.",
-  tagline: "Deep Engineering, Grassroots Understanding",
+  tagline: "What happens when infrastructure matches commitment?",
+  mission: "Building enduring, adaptable digital capacity within mission-driven institutions",
   type: "Non-profit technology start-up, registered as Section-8 company, India. (Bangalore)",
   url: "https://samanvayfoundation.org",
+  registrations: { section8: true, reg80G: true, reg12A: true, csr1: true },
   emails: {
     general: "hello@samanvayfoundation.org",
     careers: "careers@samanvayfoundation.org",

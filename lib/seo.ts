@@ -11,6 +11,17 @@ export function organizationJsonLd() {
     logo: `${siteConfig.url}/images/logo.png`,
     description: siteConfig.description,
     foundingDate: "2017",
+    founders: [
+      {
+        "@type": "Person",
+        name: "Vinay Venu",
+      },
+    ],
+    areaServed: {
+      "@type": "Country",
+      name: "India",
+    },
+    nonprofitStatus: "Nonprofit501c3",
     address: {
       "@type": "PostalAddress",
       streetAddress: "1st Floor, 147, 10th Cross Rd, Binnamangala",

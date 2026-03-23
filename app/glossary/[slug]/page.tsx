@@ -3,7 +3,6 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import { Section } from "@/components/shared/section"
-import { Breadcrumbs } from "@/components/layout/breadcrumbs"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
@@ -70,7 +69,6 @@ export default async function GlossaryTermPage({ params }: { params: Promise<{ s
       />
 
       <Section>
-        <Breadcrumbs items={[{ label: "Glossary", href: "/glossary" }, { label: term.term }]} />
         <div className="max-w-3xl mt-4">
           {category && (
             <Badge variant="secondary" className="mb-4">

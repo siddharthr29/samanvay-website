@@ -17,7 +17,7 @@ export default async function Image() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #1e3a5f 0%, #0f2440 100%)",
+          background: "linear-gradient(135deg, #0B1120 0%, #1a2744 50%, #0B1120 100%)",
           fontFamily: "system-ui, sans-serif",
         }}
       >
@@ -44,38 +44,29 @@ export default async function Image() {
           <div
             style={{
               fontSize: 28,
-              color: "#94b8db",
+              color: "#E8913A",
               textAlign: "center",
               maxWidth: 700,
               lineHeight: 1.4,
             }}
           >
-            Deep Engineering, Grassroots Understanding
+            Deep Engineering for Social Good
           </div>
           <div
             style={{
               display: "flex",
-              gap: 16,
+              gap: 24,
               marginTop: 40,
+              fontSize: 22,
+              color: "#E8913A",
+              fontWeight: 700,
             }}
           >
-            {["Avni", "Bahmni", "Gunak", "TeleSathi", "Shwaas"].map(
-              (product) => (
-                <div
-                  key={product}
-                  style={{
-                    padding: "8px 20px",
-                    background: "rgba(255,255,255,0.1)",
-                    borderRadius: 999,
-                    color: "#f97316",
-                    fontSize: 18,
-                    fontWeight: 600,
-                  }}
-                >
-                  {product}
-                </div>
-              )
-            )}
+            <span>60+ Nonprofits</span>
+            <span style={{ color: "rgba(255,255,255,0.3)" }}>|</span>
+            <span>500K+ Lives</span>
+            <span style={{ color: "rgba(255,255,255,0.3)" }}>|</span>
+            <span>6 Products</span>
           </div>
         </div>
       </div>

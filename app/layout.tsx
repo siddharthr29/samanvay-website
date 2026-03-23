@@ -1,80 +1,64 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import localFont from "next/font/local"
+import { DM_Sans, Playfair_Display } from "next/font/google"
 import { Navbar } from "@/components/layout/navbar"
 import { Footer } from "@/components/layout/footer"
+import { BottomNav } from "@/components/layout/bottom-nav"
 import { Providers } from "@/components/providers"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { siteConfig } from "@/data/site-config"
 import "./globals.css"
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-sans",
   display: "swap",
 })
 
-const clashDisplay = localFont({
-  src: [
-    {
-      path: "../public/fonts/ClashDisplay-Variable.woff2",
-      style: "normal",
-    },
-  ],
-  variable: "--font-clash",
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-heading",
   display: "swap",
-  fallback: ["system-ui", "sans-serif"],
 })
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
+    default: "Samanvay Foundation — Open Source Technology for Social Good",
     template: `%s | ${siteConfig.name}`,
   },
-  description: siteConfig.description,
+  description:
+    "Building open-source digital infrastructure for India's social sector. 60+ nonprofits. 500,000+ lives. 6 products.",
   metadataBase: new URL(siteConfig.url),
   openGraph: {
     type: "website",
     locale: "en_IN",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: siteConfig.name,
-    description: siteConfig.description,
+    title: "Samanvay Foundation — Open Source Technology for Social Good",
+    description:
+      "Building open-source digital infrastructure for India's social sector.",
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.name,
-    description: siteConfig.description,
+    title: "Samanvay Foundation",
+    description:
+      "Open-source digital infrastructure for India's social sector.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  other: {
-    "ai-content-declaration": "This website represents Samanvay Research and Development Foundation, a non-profit technology organization building open-source products for social impact in India.",
-  },
-  alternates: {
-    types: {
-      "text/plain": "/llms.txt",
-    },
-  },
+  robots: { index: true, follow: true },
+  alternates: { types: { "text/plain": "/llms.txt" } },
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} ${clashDisplay.variable} font-sans antialiased`}
-      >
+      <body className={`${dmSans.variable} ${playfair.variable} font-sans antialiased`}>
         <Providers>
           <TooltipProvider>
             <Navbar />
-            <main className="min-h-screen pt-16">{children}</main>
+            <main className="min-h-screen">{children}</main>
             <Footer />
+            <BottomNav />
           </TooltipProvider>
         </Providers>
       </body>

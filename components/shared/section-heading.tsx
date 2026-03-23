@@ -18,15 +18,15 @@ export function SectionHeading({
   align = "center",
 }: SectionHeadingProps) {
   return (
-    <div className={cn("mb-8", align === "center" && "text-center")}>
+    <div className={cn("mb-12 md:mb-16", align === "center" && "text-center")}>
       {badge && (
-        <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium text-primary bg-primary/10 rounded-full">
+        <span className="inline-block px-4 py-1.5 mb-6 text-sm font-medium text-primary bg-primary/10 rounded-full tracking-wide uppercase">
           {badge}
         </span>
       )}
       <h2
         className={cn(
-          "font-heading text-3xl md:text-4xl font-bold mb-4",
+          "font-heading text-4xl md:text-5xl font-bold mb-6 tracking-tight",
           gradient === "cool" && "gradient-text",
           gradient === "warm" && "gradient-text-warm"
         )}
@@ -37,7 +37,7 @@ export function SectionHeading({
       {subtitle && (
         <p
           className={cn(
-            "text-muted-foreground text-lg leading-relaxed",
+            "text-muted-foreground text-lg md:text-xl leading-relaxed",
             align === "center" && "max-w-2xl mx-auto"
           )}
         >
@@ -46,7 +46,7 @@ export function SectionHeading({
       )}
       <div
         className={cn(
-          "mt-4 h-1 w-16 rounded-full",
+          "mt-6 h-1 w-20 rounded-full",
           gradient === "warm"
             ? "bg-gradient-to-r from-accent to-red-500"
             : "bg-gradient-to-r from-primary to-blue-400",

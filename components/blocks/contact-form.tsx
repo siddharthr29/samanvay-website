@@ -2,8 +2,6 @@
 
 import { useState, type FormEvent } from "react"
 import { Send, Loader2, CheckCircle } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
 interface FieldErrors {
@@ -18,27 +16,12 @@ function validateEmail(email: string): boolean {
 
 function validateForm(data: { name: string; email: string; message: string }): FieldErrors {
   const errors: FieldErrors = {}
-
-  if (!data.name.trim()) {
-    errors.name = "Name is required"
-  } else if (data.name.trim().length < 2) {
-    errors.name = "Name must be at least 2 characters"
-  } else if (data.name.trim().length > 100) {
-    errors.name = "Name is too long"
-  }
-
-  if (!data.email.trim()) {
-    errors.email = "Email is required"
-  } else if (!validateEmail(data.email.trim())) {
-    errors.email = "Please enter a valid email address"
-  }
-
-  if (!data.message.trim()) {
-    errors.message = "Message is required"
-  } else if (data.message.trim().length < 10) {
-    errors.message = "Message must be at least 10 characters"
-  }
-
+  if (!data.name.trim()) errors.name = "Name is required"
+  else if (data.name.trim().length < 2) errors.name = "Name must be at least 2 characters"
+  if (!data.email.trim()) errors.email = "Email is required"
+  else if (!validateEmail(data.email.trim())) errors.email = "Please enter a valid email address"
+  if (!data.message.trim()) errors.message = "Message is required"
+  else if (data.message.trim().length < 10) errors.message = "Message must be at least 10 characters"
   return errors
 }
 
@@ -50,22 +33,17 @@ export function ContactForm() {
 
   function handleBlur(field: string, value: string) {
     setTouched((prev) => ({ ...prev, [field]: true }))
-    // Validate single field on blur
     const errors = validateForm({
       name: field === "name" ? value : "",
       email: field === "email" ? value : "",
       message: field === "message" ? value : "",
     })
-    setFieldErrors((prev) => ({
-      ...prev,
-      [field]: errors[field as keyof FieldErrors],
-    }))
+    setFieldErrors((prev) => ({ ...prev, [field]: errors[field as keyof FieldErrors] }))
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setFieldErrors({})
-
     const formData = new FormData(e.currentTarget)
     const data = {
       name: (formData.get("name") as string) || "",
@@ -74,24 +52,19 @@ export function ContactForm() {
       message: (formData.get("message") as string) || "",
       source: "contact-form",
     }
-
-    // Client-side validation
     const errors = validateForm(data)
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
       setTouched({ name: true, email: true, message: true })
       return
     }
-
     setStatus("loading")
-
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
-
       if (!res.ok) {
         const result = await res.json().catch(() => ({}))
         throw new Error(result.error || "Failed to submit")
@@ -109,94 +82,57 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <Card>
-        <CardContent className="text-center py-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/10 mb-4">
-            <CheckCircle className="h-8 w-8 text-green-500" />
-          </div>
-          <h3 className="font-heading text-xl font-bold mb-2">Thank you!</h3>
-          <p className="text-muted-foreground">We&apos;ll get back to you shortly.</p>
-        </CardContent>
-      </Card>
+      <div className="text-center py-12">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/20 mb-4">
+          <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
+        </div>
+        <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">Thank you!</h3>
+        <p className="text-zinc-600 dark:text-zinc-400">We&apos;ll get back to you within 48 hours.</p>
+      </div>
     )
   }
 
+  const inputBase =
+    "w-full px-4 py-3.5 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white text-base placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 transition-all min-h-[52px]"
+
   const inputClass = (field: keyof FieldErrors) =>
-    `w-full px-4 py-3 rounded-xl border bg-background text-foreground focus:outline-none focus:ring-2 transition-all ${
+    `${inputBase} ${
       touched[field] && fieldErrors[field]
-        ? "border-destructive focus:ring-destructive/30 focus:border-destructive"
-        : "focus:ring-primary/30 focus:border-primary"
+        ? "border-red-400 focus:ring-red-300/30 focus:border-red-400"
+        : "focus:ring-amber-500/30 focus:border-amber-500"
     }`
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium mb-2">
-            Name <span className="text-destructive">*</span>
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            maxLength={100}
-            className={inputClass("name")}
-            placeholder="Your name"
-            onBlur={(e) => handleBlur("name", e.target.value)}
-          />
-          {touched.name && fieldErrors.name && (
-            <p className="text-xs text-destructive mt-1.5">{fieldErrors.name}</p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-2">
-            Email <span className="text-destructive">*</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            className={inputClass("email")}
-            placeholder="you@organization.org"
-            onBlur={(e) => handleBlur("email", e.target.value)}
-          />
-          {touched.email && fieldErrors.email && (
-            <p className="text-xs text-destructive mt-1.5">{fieldErrors.email}</p>
-          )}
-        </div>
-      </div>
+    <form onSubmit={handleSubmit} noValidate className="space-y-5">
       <div>
-        <label htmlFor="organization" className="block text-sm font-medium mb-2">
+        <label htmlFor="name" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
+          Name <span className="text-red-500">*</span>
+        </label>
+        <input type="text" id="name" name="name" required maxLength={100} className={inputClass("name")} placeholder="Your name" onBlur={(e) => handleBlur("name", e.target.value)} />
+        {touched.name && fieldErrors.name && <p className="text-xs text-red-500 mt-1.5">{fieldErrors.name}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="organization" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
           Organization
         </label>
-        <input
-          type="text"
-          id="organization"
-          name="organization"
-          maxLength={200}
-          className="w-full px-4 py-3 rounded-xl border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-          placeholder="Your organization"
-        />
+        <input type="text" id="organization" name="organization" maxLength={200} className={inputBase} placeholder="Your organization" />
       </div>
+
       <div>
-        <label htmlFor="message" className="block text-sm font-medium mb-2">
-          Message <span className="text-destructive">*</span>
+        <label htmlFor="email" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
+          Email <span className="text-red-500">*</span>
         </label>
-        <textarea
-          id="message"
-          name="message"
-          required
-          rows={5}
-          maxLength={2000}
-          className={inputClass("message")}
-          placeholder="Tell us about your needs..."
-          onBlur={(e) => handleBlur("message", e.target.value)}
-        />
-        {touched.message && fieldErrors.message && (
-          <p className="text-xs text-destructive mt-1.5">{fieldErrors.message}</p>
-        )}
+        <input type="email" id="email" name="email" required className={inputClass("email")} placeholder="you@organization.org" onBlur={(e) => handleBlur("email", e.target.value)} />
+        {touched.email && fieldErrors.email && <p className="text-xs text-red-500 mt-1.5">{fieldErrors.email}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="message" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
+          How can we work together? <span className="text-red-500">*</span>
+        </label>
+        <textarea id="message" name="message" required rows={5} maxLength={2000} className={inputClass("message")} placeholder="Tell us about your needs..." onBlur={(e) => handleBlur("message", e.target.value)} />
+        {touched.message && fieldErrors.message && <p className="text-xs text-red-500 mt-1.5">{fieldErrors.message}</p>}
       </div>
 
       {status === "error" && (
@@ -205,24 +141,17 @@ export function ContactForm() {
         </Alert>
       )}
 
-      <Button
+      <button
         type="submit"
         disabled={status === "loading"}
-        size="lg"
-        className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white shadow-lg shadow-orange-500/20 rounded-xl"
+        className="inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[48px] bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {status === "loading" ? (
-          <>
-            <Loader2 className="h-4 w-4 animate-spin" />
-            Sending...
-          </>
+          <><Loader2 className="h-4 w-4 animate-spin" /> Sending...</>
         ) : (
-          <>
-            <Send className="h-4 w-4" />
-            Send Message
-          </>
+          <><Send className="h-4 w-4" /> Send Message</>
         )}
-      </Button>
+      </button>
     </form>
   )
 }

@@ -3,7 +3,6 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Check } from "lucide-react"
 import { Section } from "@/components/shared/section"
-import { Breadcrumbs } from "@/components/layout/breadcrumbs"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -55,11 +54,10 @@ export default async function ComparisonPage({ params }: { params: Promise<{ slu
         }}
       />
 
-      <section className="relative overflow-hidden">
+      <section className="relative">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0f172a] via-[#1e3a5f] to-[#0f2847]" />
         <div className="absolute inset-0 dot-pattern opacity-20" />
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-          <Breadcrumbs items={[{ label: "Compare", href: "/compare" }, { label: `${comparison.productA} vs ${comparison.productB}` }]} variant="light" />
           <div className="max-w-3xl mt-4">
             <div className="flex items-center gap-3 mb-4">
               <Badge variant="secondary" className="bg-white/10 text-blue-200 border-white/20">

@@ -6,7 +6,6 @@ import { ArticleRenderer } from "@/components/article/article-renderer"
 import { TableOfContents } from "@/components/article/table-of-contents"
 import { ShareButtons } from "@/components/article/share-buttons"
 import { ReadingProgress } from "@/components/article/reading-progress"
-import { Breadcrumbs } from "@/components/layout/breadcrumbs"
 import { getArticleBySlug, getPublishedArticles } from "@/lib/notion"
 import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo"
 import { siteConfig } from "@/data/site-config"
@@ -97,13 +96,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       />
 
       <Section>
-        <Breadcrumbs
-          items={[
-            { label: "Articles", href: "/articles" },
-            { label: article.title },
-          ]}
-        />
-
         <div className="max-w-4xl">
           {article.category && (
             <span className="inline-block px-3 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full mb-4">
